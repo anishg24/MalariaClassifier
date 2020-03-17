@@ -1,3 +1,6 @@
+pandas
+scikit-image
+matplotlib
 keras
 numpy
 scikit-learn

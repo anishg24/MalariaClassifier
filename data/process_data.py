@@ -22,7 +22,7 @@ image_size = (128, 128, 3)
 # These are infected confirmed
 for infected_file in os.listdir(INFECTED):
     try:
-        temp["Image Array"].append(resize(imread(NOT_INFECTED + not_infected_file), image_size))
+        temp["Image Array"].append(resize(imread(NOT_INFECTED + infected_file), image_size))
     except:
         continue
     temp["Infected"].append(1)
