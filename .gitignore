@@ -1,4 +1,7 @@
 /data/cell_images/
 /data/cell-images-for-detecting-malaria.zip
-/data/images.npy
-/data/labels.npy
+/data/*.npy
+/data/.kaggle
+/venv/
+/*/.ipynb_checkpoints
+.ipynb_checkpoints
