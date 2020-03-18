@@ -1,51 +1,37 @@
-import os
-import pandas as pd
 import numpy as np
-from skimage.transform import resize
-from matplotlib.image import imread
+import pandas as pd
+from cv2 import imread, resize
+import os
+import matplotlib.pyplot as plt
+from glob import glob
 
-DATA_DIR = "../data/"
-IMAGE_DIR = DATA_DIR + "cell_images/"
-INFECTED = IMAGE_DIR + "Parasitized/"
-NOT_INFECTED = IMAGE_DIR + "Uninfected/"
+DATA_DIR = os.path.dirname(os.getcwd()) + "/data/"
+INFECTED = os.path.join(DATA_DIR, "cell_images", "Parasitized", "C*.png")
+NOT_INFECTED = os.path.join(DATA_DIR, "cell_images", "Uninfected", "C*.png")
 
-print("Setup all imports and constants")
+# print("Setup all imports and constants")
+# print(DATA_DIR)
+# print(INFECTED)
+# print(NOT_INFECTED)
 
-temp = {
-    "Infected": [],
-    "Not Infected": [],
-    "Image Array": []
-}
+def process():
+    array_maker = lambda x: resize(imread(x), (128, 128))
+    cutoff = 2500  # Final array size is cutoff * 2
 
-image_size = (128, 128, 3)
+    infected_arrays = np.array(list(map(array_maker, glob(INFECTED)[:cutoff])))
+    uninfected_arrays = np.array(list(map(array_maker, glob(NOT_INFECTED)[:cutoff])))
+    arrays = np.concatenate((infected_arrays, uninfected_arrays))
+    print("Created image arrays")
 
-# These are infected confirmed
-for infected_file in os.listdir(INFECTED):
-    try:
-        temp["Image Array"].append(resize(imread(NOT_INFECTED + infected_file), image_size))
-    except:
-        continue
-    temp["Infected"].append(1)
-    temp["Not Infected"].append(0)
+    total_size = len(infected_arrays) + len(uninfected_arrays)
+    infected_labels = np.zeros(total_size)
+    uninfected_labels = np.zeros(total_size)
+    infected_labels[:len(infected_arrays)] = 1
+    uninfected_labels[len(infected_arrays):] = 1
+    labels = np.stack((infected_labels, uninfected_labels), axis=1)
+    print("Created labels")
 
-print("Loaded infected files")
-
-# These are uninfected
-for not_infected_file in os.listdir(NOT_INFECTED):
-    try:
-        temp["Image Array"].append(resize(imread(NOT_INFECTED + not_infected_file), image_size))
-    except:
-        continue
-    temp["Infected"].append(0)
-    temp["Not Infected"].append(1)
-
-print("Loaded uninfected files")
-
-df = pd.DataFrame().from_dict(temp)
-
-labels = df[df.columns[0:2]].values
-images = np.stack(df["Image Array"].values)
-
-np.save(DATA_DIR+"images.npy", images)
-np.save(DATA_DIR+"labels.npy", labels)
-print("Done")
+    make_file = lambda x: os.path.join(DATA_DIR, x)
+    np.save(make_file("image_arrays.npy"), arrays)
+    np.save(make_file("label_arrays.npy"), labels)
+    del arrays, labels
