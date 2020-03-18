@@ -136,7 +136,7 @@ Argument | Output
 - [x] Add the ability to retrain the model with new user input
 - [ ] Use all 28k images to train the model (streaming)
 - [ ] Data augmentation to improve accuracy of the models
-- [ ] Make a website that allows you to add images or take images of a cell image and tells you what species they are.
+- [ ] Make a website that allows you to add images or take images of a cell image and tells you if the cell is infected.
 
 ## Releases
 - 1.0.0 (3/18/2020): First working release. No streaming yet, will come in v2.
