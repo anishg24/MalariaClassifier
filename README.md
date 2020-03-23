@@ -106,7 +106,7 @@ I could compute this on my MacBook and get an accuracy of 70%. This means that p
 
 1. Clone this repo (for help see this [tutorial](https://help.github.com/articles/cloning-a-repository/)).
 2. Download the dataset [here][dataset] and unzip the file in the `data/` folder of this repo. 
-   **DO NOT CHANGE THE FOLDER NAME FROM **`cell_images/`
+   **DO NOT CHANGE THE FOLDER NAME FROM** `cell_images/`
 3. `conda create venv`
 4. `conda activate venv`
 5. `conda install -r requirements.txt`
