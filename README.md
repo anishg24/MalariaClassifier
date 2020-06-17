@@ -143,7 +143,7 @@ Argument | Output
 
 ## Contributing Members
 
-Creator: [Anish Govind](https://github.com/anishg24@gmail.com)
+Creator: [Anish Govind](https://github.com/anishg24)
 
 Ways to contact:
 * [E-Mail](anishg24@gmail.com)
